@@ -4,10 +4,8 @@ services:
     image: nodejs
     container_name: nodejs
     build:
-      context: .
-      dockerfile: ./nodejs/Dockerfile
+      context: nodejs
+      dockerfile: Dockerfile
     ports:
       - "13000:3000"
     command: "npm test"
-    volumes: 
-      - ./nodejs/app:/app
