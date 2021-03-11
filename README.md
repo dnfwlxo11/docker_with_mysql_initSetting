@@ -2,9 +2,9 @@
   
 **Suppose you have docker and docker-compos installed.**  
   
-0. docker-compose -f docker-compose.yml build (docker image build)  
+0. ```docker-compose -f docker-compose.yml build``` (docker image build)  
     
-1. docker-compose up -d (docker image run)  
+1. ```docker-compose up -d``` (docker image run)  
     
 2. Access <yourIP>:13000/  
   
