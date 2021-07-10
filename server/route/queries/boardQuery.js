@@ -11,6 +11,21 @@ module.exports = {
         return sql.join('');
     },
 
+    selectContent(params) {
+        const sql = [];
+        
+        sql.push('SELECT ');
+        sql.push('* ');
+        sql.push('FROM ');
+        sql.push('BOARD ');
+        sql.push('WHERE ');
+        sql.push('bid= ');
+        sql.push(`${params.bid}`);
+
+        console.log(sql.join(''));
+        return sql.join('');
+    },
+
     insertContent(params) {
         const sql = [];
         
@@ -23,11 +38,11 @@ module.exports = {
         sql.push('PASS, ');
         sql.push('_DATE) ');
         sql.push('VALUES (');
-        sql.push(`${params.user}`);
-        sql.push(`${params.title}`);
-        sql.push(`${params.content}`);
-        sql.push(`SHA2(${params.pass}, 256)`);
-        sql.push('DEFAULT');
+        sql.push(`"${params.user}", `);
+        sql.push(`"${params.title}", `);
+        sql.push(`"${params.content}", `);
+        sql.push(`SHA2(${params.pass}, 256), `);
+        sql.push('DEFAULT)');
 
         console.log(sql.join(''));
         return sql.join('');
