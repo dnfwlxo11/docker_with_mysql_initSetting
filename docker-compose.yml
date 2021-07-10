@@ -1,14 +1,5 @@
 version: '3'
 services:
-  app:
-    image: nodejs_daechu
-    container_name: nodejs_daechu
-    build:
-      context: nodejs
-      dockerfile: Dockerfile
-    ports:
-      - "13000:3000"
-    command: "npm test"
   db:
     image: mysql_daechu
     container_name: mysql_daechu
@@ -16,13 +7,14 @@ services:
       context: mysql
       dockerfile: Dockerfile
     environment:
+      MYSQL_USER: "root"
       MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE_NAME: "test"
+      MYSQL_DATABASE_NAME: "boards"
     volumes: 
       - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql-init/:/docker-entrypoint-init.d/
     ports:
-      - "13001:3306"
-    #entrypoint: ./mysql/sync_script.sh
+      - "13000:3306"
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
