@@ -18,10 +18,16 @@ router.get('/getComments', (req, res) => {
     const result = async () => {
         const conn = await pool.getConnection();
 
-        const [rows, fields] = await conn.query(Query.selectComments());
+        try {
+            const [rows, fields] = await conn.query(Query.selectComments());
 
-        conn.release();
-        res.send(rows);
+            conn.end();
+            res.send(rows);
+        } catch (err) {
+            console.log(err)
+            conn.end();
+            res.send({ success: false, err })
+        }
     }
 
     result();
@@ -31,10 +37,17 @@ router.post('/createComment', (req, res) => {
     const result = async () => {
         const conn = await pool.getConnection();
 
-        const [rows, fields] = await conn.query(Query.insertComment(req.body));
+        try {
+            const [rows, fields] = await conn.query(Query.insertComment(req.body));
 
-        conn.release();
-        res.send(rows[0]);
+            conn.end();
+            res.send(rows[0]);
+        } catch (err) {
+            console.log(err)
+            conn.end();
+            res.send({ success: false, err })
+        }
+
     }
 
     result();
@@ -51,7 +64,7 @@ router.post('/deleteComment', (req, res) => {
             res.send({ success: true });
         } catch (err) {
             console.log(err)
-            conn.release();
+            conn.end();
             res.send({ success: false, err })
         }
     }

@@ -18,10 +18,16 @@ router.get('/getContents', (req, res) => {
     const result = async () => {
         const conn = await pool.getConnection();
 
-        const [rows, fields] = await conn.query(Query.selectContents());
+        try {
+            const [rows, fields] = await conn.query(Query.selectContents());
 
-        conn.release();
-        res.send(rows[0]);
+            conn.release();
+            res.send(rows[0]);
+        } catch (err) {
+            console.log(err)
+            conn.release();
+            res.send({ success: false, err })
+        }
     }
 
     result();
@@ -31,10 +37,17 @@ router.post('/createContent', (req, res) => {
     const result = async () => {
         const conn = await pool.getConnection();
 
-        const [rows, fields] = await conn.query(Query.insertContent(req.body));
+        try {
+            const [rows, fields] = await conn.query(Query.insertContent(req.body));
 
-        conn.release();
-        res.send(rows[0]);
+            conn.release();
+            res.send(rows[0]);
+        } catch (err) {
+            console.log(err)
+            conn.release();
+            res.send({ success: false, err })
+        }
+        
     }
 
     result();
